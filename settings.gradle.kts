@@ -21,3 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "Sparq Demo App"
 include(":app")
+include(":data")
