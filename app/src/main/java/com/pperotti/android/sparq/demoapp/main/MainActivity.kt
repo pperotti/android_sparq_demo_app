@@ -1,4 +1,4 @@
-package com.pperotti.android.sparq.demoapp
+package com.pperotti.android.sparq.demoapp.main
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -11,11 +11,25 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.lifecycleScope
 import com.pperotti.android.sparq.demoapp.ui.theme.SparqDemoAppTheme
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    @Inject lateinit var mainViewModel: MainViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        //println("API Base URL is: ${BuildConfig.API_BASE_URL}")
+        lifecycleScope.launch {
+            mainViewModel.requestData()
+        }
+
         enableEdgeToEdge()
         setContent {
             SparqDemoAppTheme {

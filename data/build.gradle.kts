@@ -1,7 +1,23 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.hilt)
 }
+
+// Load local.properties manually
+val localProperties = Properties().apply {
+    val localPropsFile = rootProject.file("local.properties")
+    if (localPropsFile.exists()) {
+        load(localPropsFile.inputStream())
+    }
+}
+
+// Read the property (with fallback if missing)
+val apiBaseUrl: String = localProperties.getProperty("API_BASE_URL")
+    ?: error("API_BASE_URL not defined in local.properties")
 
 android {
     namespace = "com.pperotti.android.sparq.demoapp.data"
@@ -12,6 +28,9 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
+
+        // Inject it into BuildConfig
+        buildConfigField("String", "API_BASE_URL", "\"$apiBaseUrl\"")
     }
 
     buildTypes {
@@ -30,12 +49,31 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+    buildFeatures {
+        buildConfig = true
+    }
 }
 
 dependencies {
 
+    // Dependency of the data layer
     implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
+
+    // Retrofit
+    implementation(libs.retrofit2)
+    implementation(libs.retrofit2.converter.gson)
+
+    // OkHttp
+    implementation(libs.okhttp3.okhttp)
+    implementation(libs.okhttp3.logging.interceptor)
+
+    // Hilt
+    implementation(libs.hilt.android)
+    implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.hilt.android.testing)
+    ksp(libs.hilt.android.compiler)
+
+    // Test
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
