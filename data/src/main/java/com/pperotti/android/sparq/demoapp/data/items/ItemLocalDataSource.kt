@@ -15,13 +15,15 @@ interface ItemLocalDataSource {
 
 @Singleton
 class DefaultItemLocalDataSource(
-
+    val itemDao: ItemDao
 ) : ItemLocalDataSource {
 
-    var lastResult = ItemListResult(emptyList())
-
     override suspend fun getItemList(): ItemListResult {
-        return lastResult
+        return ItemListResult(
+            items = itemDao.getAllItems().map {
+                it.toItem()
+            }
+        )
     }
 
     override suspend fun getItemDetail(id: Int): ItemResult {
@@ -29,12 +31,12 @@ class DefaultItemLocalDataSource(
     }
 
     override suspend fun saveItemListResult(remoteItemList: List<RemoteItem>) {
-        lastResult = ItemListResult(remoteItemList.map {
-            transformRemoteItemIntoItem(it)
+        itemDao.insertAll(remoteItemList.map {
+            it.toStorageItem()
         })
     }
 
     override suspend fun hasItemListResult(): Boolean {
-        return false
+        return itemDao.getItemCount() > 0
     }
 }

@@ -1,6 +1,5 @@
 package com.pperotti.android.sparq.demoapp.data.items
 
-import com.pperotti.android.sparq.demoapp.data.BuildConfig
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -25,4 +24,25 @@ class DefaultItemRemoteDataSource @Inject constructor(
     override suspend fun retrieveItemList(): List<RemoteItem> {
         return itemApi.fetchItemList()
     }
+}
+
+/**
+ * An Item representation as exposed by the remote API
+ */
+data class RemoteItem(
+    val title: String?,
+    val description: String?
+)
+
+/**
+ * Mapper between RemoteItem and Item
+ *
+ * @param remoteItem The RemoteItem to transform
+ * @return The
+ */
+fun transformRemoteItemIntoItem(remoteItem: RemoteItem): Item {
+    return Item(
+        title = remoteItem.title,
+        description = remoteItem.description
+    )
 }

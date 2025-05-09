@@ -28,21 +28,3 @@ data class ItemResult(
     val id: Int,
     val item: Item
 )
-
-/**
- * An Item representation as exposed by the remote API
- */
-data class RemoteItem(
-    val title: String?,
-    val description: String?
-)
-
-/**
- * Mapper between RemoteItem and Item
- */
-fun transformRemoteItemIntoItem(remoteItem: RemoteItem): Item {
-    return Item(
-        title = remoteItem.title,
-        description = remoteItem.description
-    )
-}

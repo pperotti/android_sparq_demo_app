@@ -73,6 +73,11 @@ dependencies {
     implementation(libs.hilt.android.testing)
     ksp(libs.hilt.android.compiler)
 
+    // Room
+    implementation(libs.androidx.room.runtime)
+    ksp(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.ktx)
+
     // Test
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

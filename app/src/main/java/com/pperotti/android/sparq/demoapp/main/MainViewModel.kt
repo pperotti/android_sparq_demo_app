@@ -51,9 +51,9 @@ class MainViewModel @Inject constructor(
         itemListResult.items.forEach { item ->
             resultList.add(
                 MainListItemUiState(
-                    id = item.id ?: 0,
-                    title = item.title,
-                    description = ""
+                    id = item.id,
+                    title = item.title ?: "",
+                    description = item.description ?: ""
                 )
             )
         }
