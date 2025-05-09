@@ -1,7 +1,7 @@
 package com.pperotti.android.sparq.demoapp.di
 
 import com.pperotti.android.sparq.demoapp.data.items.ItemRepository
-import com.pperotti.android.sparq.demoapp.main.MainViewModel
+import com.pperotti.android.sparq.demoapp.ui.main.MainViewModel
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

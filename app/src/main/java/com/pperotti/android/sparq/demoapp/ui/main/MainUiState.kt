@@ -1,4 +1,4 @@
-package com.pperotti.android.sparq.demoapp.main
+package com.pperotti.android.sparq.demoapp.ui.main
 
 /**
  * This is the state that represents what the screen will look like

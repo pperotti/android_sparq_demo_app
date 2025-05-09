@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Sparq Demo App</string>
+
+    <!-- Top Bar Titles -->
+    <string name="main_list_top_bar_title">Sparq Item\'s List</string>
+
+    <!-- Generic Messages -->
+    <string name="error_no_description">We cannot retrieve the data at this time. Try again later.</string>
+
 </resources>

@@ -19,6 +19,7 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
+        // TODO: Remove me
         // Read the property from gradle.properties
         // val apiBaseUrl: String = project.findProperty("API_BASE_URL") as String
     }
@@ -67,19 +68,6 @@ dependencies {
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.hilt.android.testing)
     ksp(libs.hilt.android.compiler)
-
-    // Retrofit
-    implementation(libs.retrofit2)
-    implementation(libs.retrofit2.converter.gson)
-
-    // OkHttp
-    implementation(libs.okhttp3.okhttp)
-    implementation(libs.okhttp3.logging.interceptor)
-
-    // Room
-    implementation(libs.androidx.room.runtime)
-    ksp(libs.androidx.room.compiler)
-    implementation(libs.androidx.room.ktx)
 
     // Tests
     testImplementation(libs.junit)
