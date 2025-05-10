@@ -40,9 +40,9 @@ import com.pperotti.android.sparq.demoapp.ui.common.LoadingContent
 
 @Composable
 fun MainScreen(
+    modifier: Modifier = Modifier,
     mainViewModel: MainViewModel = hiltViewModel(),
     onItemSelected: (id: Int) -> Unit,
-    modifier: Modifier = Modifier
 ) {
     // Invoke fetchData when the screen is first displayed
     LaunchedEffect(true) {
@@ -116,7 +116,7 @@ fun CardItemComposable(
             onItemSelected(item.id)
         }
     ) {
-        Column {
+        Column(modifier = Modifier.padding(16.dp)) {
             Text(
                 text = item.title ?: "-",
                 style = MaterialTheme.typography.titleMedium,

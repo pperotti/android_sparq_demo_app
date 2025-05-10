@@ -1,4 +1,4 @@
-package com.pperotti.android.sparq.demoapp.di
+package com.pperotti.android.sparq.demoapp.ui.di
 
 import com.pperotti.android.sparq.demoapp.data.items.ItemRepository
 import com.pperotti.android.sparq.demoapp.ui.main.MainViewModel

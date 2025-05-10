@@ -18,10 +18,6 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-
-        // TODO: Remove me
-        // Read the property from gradle.properties
-        // val apiBaseUrl: String = project.findProperty("API_BASE_URL") as String
     }
 
     buildTypes {
