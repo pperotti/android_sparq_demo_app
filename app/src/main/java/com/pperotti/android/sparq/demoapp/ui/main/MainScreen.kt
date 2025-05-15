@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -52,29 +53,33 @@ fun MainScreen(
     // Collect data from the ViewModel and react to it
     mainViewModel.uiState.collectAsState().value.let { state ->
         // Draw the content by the state
-        DrawScreenContent(state, modifier, onItemSelected)
+        DrawScreenContent(modifier, state, onItemSelected)
     }
 }
 
 @Composable
 fun DrawScreenContent(
+    modifier: Modifier = Modifier,
     uiState: MainUiState,
-    modifier: Modifier,
     onItemSelected: (id: Int) -> Unit
 ) {
     Scaffold(
         modifier = modifier.fillMaxSize(),
         topBar = { MainScreenTopAppBar(modifier) }
-    ) { paddingValues ->
+    ) { innerPadding ->
         when (uiState) {
-            is MainUiState.Loading -> LoadingContent(modifier)
+            is MainUiState.Loading -> LoadingContent(
+                modifier.padding(innerPadding)
+            )
             is MainUiState.Success -> MainListContent(
                 uiItems = uiState.items,
-                modifier = modifier.padding(paddingValues),
                 onItemSelected = onItemSelected
             )
 
-            is MainUiState.Error -> ErrorContent(uiState.message, modifier)
+            is MainUiState.Error -> ErrorContent(
+                modifier.padding(innerPadding),
+                uiState.message
+            )
         }
     }
 }
@@ -82,7 +87,6 @@ fun DrawScreenContent(
 @Composable
 fun MainListContent(
     uiItems: List<MainListItemUiState>,
-    modifier: Modifier,
     onItemSelected: (id: Int) -> Unit
 ) {
     val configuration = LocalConfiguration.current
@@ -92,11 +96,9 @@ fun MainListContent(
     LazyVerticalGrid(
         columns = GridCells.Fixed(columnSize),
         contentPadding = PaddingValues(16.dp),
-        modifier = modifier
     ) {
         items(uiItems) { item ->
-            CardItemComposable(item, onItemSelected = onItemSelected)
-            Spacer(modifier = Modifier.height(16.dp)) // Add space between cards
+            CardItemComposable(item = item, onItemSelected = onItemSelected)
         }
     }
 }
@@ -108,15 +110,18 @@ fun CardItemComposable(
 ) {
     Card(
         modifier = Modifier
-            .padding(12.dp)
-            .fillMaxSize(),
-        shape = RoundedCornerShape(16.dp),
+            .padding(8.dp)
+            .fillMaxSize(0f)
+            .defaultMinSize(minHeight = 100.dp),
+        shape = RoundedCornerShape(4.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         onClick = {
             onItemSelected(item.id)
         }
     ) {
-        Column(modifier = Modifier.padding(16.dp)) {
+        Column(
+            modifier = Modifier.padding(16.dp)
+        ) {
             Text(
                 text = item.title ?: "-",
                 style = MaterialTheme.typography.titleMedium,
@@ -142,7 +147,7 @@ fun CardItemComposable(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreenTopAppBar(modifier: Modifier) {
+fun MainScreenTopAppBar(modifier: Modifier = Modifier) {
     TopAppBar(
         title = {
             Box(
