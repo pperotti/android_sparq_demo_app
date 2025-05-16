@@ -46,7 +46,6 @@ class MainViewModel @Inject constructor(
     }
 
     private fun transformSuccessResponse(itemListResult: ItemListResult) {
-        println("Response: ${itemListResult}")
         val resultList: MutableList<MainListItemUiState> = mutableListOf()
         itemListResult.items.forEach { item ->
             resultList.add(

@@ -51,10 +51,8 @@ fun MainScreen(
     }
 
     // Collect data from the ViewModel and react to it
-    mainViewModel.uiState.collectAsState().value.let { state ->
-        // Draw the content by the state
-        DrawScreenContent(modifier, state, onItemSelected)
-    }
+    val state = mainViewModel.uiState.collectAsState().value
+    DrawScreenContent(modifier, state, onItemSelected)
 }
 
 @Composable
