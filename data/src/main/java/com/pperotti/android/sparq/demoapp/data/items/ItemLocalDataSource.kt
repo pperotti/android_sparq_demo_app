@@ -6,8 +6,6 @@ interface ItemLocalDataSource {
 
     suspend fun getItemList(): ItemListResult
 
-    suspend fun getItemDetail(id: Int): ItemResult
-
     suspend fun saveItemListResult(remoteItemList: List<RemoteItem>)
 
     suspend fun hasItemListResult(): Boolean
@@ -24,10 +22,6 @@ class DefaultItemLocalDataSource(
                 it.toItem()
             }
         )
-    }
-
-    override suspend fun getItemDetail(id: Int): ItemResult {
-        TODO("Not yet implemented")
     }
 
     override suspend fun saveItemListResult(remoteItemList: List<RemoteItem>) {

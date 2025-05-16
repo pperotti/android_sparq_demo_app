@@ -1,7 +1,6 @@
 package com.pperotti.android.sparq.demoapp.data.items
 
 import com.pperotti.android.sparq.demoapp.data.common.DataResponse
-import com.pperotti.android.sparq.demoapp.data.di.IoDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -12,14 +11,13 @@ import javax.inject.Singleton
  */
 interface ItemRepository {
     suspend fun fetchItemList(): DataResponse<ItemListResult>
-    suspend fun fetchItemDetail(id: Int): DataResponse<ItemResult>
 }
 
 @Singleton
 class DefaultItemRepository @Inject constructor(
     val localDataSource: ItemLocalDataSource,
     val remoteDataSource: ItemRemoteDataSource,
-    @IoDispatcher val dispatcher: CoroutineDispatcher
+    val dispatcher: CoroutineDispatcher
 ) : ItemRepository {
 
     override suspend fun fetchItemList(): DataResponse<ItemListResult> {
@@ -35,9 +33,5 @@ class DefaultItemRepository @Inject constructor(
                 DataResponse.Error(e.localizedMessage, e.cause)
             }
         }
-    }
-
-    override suspend fun fetchItemDetail(id: Int): DataResponse<ItemResult> {
-        TODO("Not yet implemented")
     }
 }

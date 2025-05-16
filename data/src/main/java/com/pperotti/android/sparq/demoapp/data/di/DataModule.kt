@@ -17,6 +17,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import javax.inject.Singleton
 
 @Module
@@ -52,16 +53,21 @@ object DataModule {
     }
 
     @Provides
+    fun provideCoroutineDispatcher(): CoroutineDispatcher {
+        return Dispatchers.IO
+    }
+
+    @Provides
     @Singleton
     fun provideItemRepository(
         localDataSource: ItemLocalDataSource,
         remoteDataSource: ItemRemoteDataSource,
-        @IoDispatcher dispatcher: CoroutineDispatcher
+        dispatcher: CoroutineDispatcher
     ): ItemRepository {
         return DefaultItemRepository(
             localDataSource = localDataSource,
             remoteDataSource = remoteDataSource,
-            dispatcher =  dispatcher
+            dispatcher = dispatcher
         )
     }
 }
